@@ -18,3 +18,6 @@ class PBInstance:
         self.district = district
         self.category = category
         self.budget = budget
+    
+    def __str__(self):
+        return str(self.__dict__)
