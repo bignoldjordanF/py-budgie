@@ -9,13 +9,30 @@ def main():
     instance = pybudgie.PBInstance(
         description = metadata['description'],
         budget = metadata['budget'],
-        vote_type = pbreader.PBVoteType.from_string(metadata['vote_type']),
         country = metadata['country'],
         region = metadata['unit'],
         district = metadata['district'],
         category = metadata['subunit'],
     )
 
+    for pid, project in projects.items():
+        instance.projects.append(pybudgie.PBProject(
+            id = pid,
+            name = project['name'],
+            cost = project['cost'],
+            categories = project['category'].split(','),
+            targets = project['target'].split(',')
+        ))
+    
+    for vid, voter in voters.items():
+        instance.voters.append(pybudgie.PBVoter(
+            id = vid,
+            age = voter['age'],
+            sex = voter['sex'],
+            neighborhood = voter['neighborhood'],
+            voting_method = voter['voting_method'],
+        ))
+    
     print(instance)
 
 
