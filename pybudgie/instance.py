@@ -35,7 +35,7 @@ class PBInstance:
         self.country = country
         self.region = region
         self.district = district
-        self.category = [] if not categories else categories
+        self.categories = [] if not categories else categories
         self.budget = budget
         self.projects = [] if not projects else projects
         self.voters = [] if not voters else voters
