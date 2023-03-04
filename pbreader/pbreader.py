@@ -31,6 +31,9 @@ def read_pb_file(filepath: str) -> PBFileContents:
     projects: Dict[int, Dict[str, Union[str, int, float]]] = {}
     votes: Dict[int, Dict[str, Union[str, int]]] = {}
 
+    if not filepath.endswith('.pb'):
+        filepath += '.pb'
+
     with open(filepath, 'r', newline='', encoding='utf-8') as csvfile:
         section, header, reader = '', [], csv.reader(csvfile, delimiter=';')
         for row in reader:
