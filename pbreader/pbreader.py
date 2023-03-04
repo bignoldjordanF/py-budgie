@@ -11,7 +11,7 @@ class PBFileContents:
     projects: Dict[int, Dict[str, Union[str, int, float]]]
     """The project data represented as a projectId->data mapping."""
 
-    votes: Dict[int, Dict[str, Union[str, int]]]
+    voters: Dict[int, Dict[str, Union[str, int]]]
     """The voter data represented as a voterId->data mapping."""
 
 
