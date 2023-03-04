@@ -14,7 +14,7 @@ class PBInstance:
             budget: int = 0,
             projects: List[PBProject] = None,
             voters: List[PBVoter] = None,
-    ):
+    ) -> None:
         """
         Constructs a PBInstance from optional metadata, a budget and a list of projects and voters.
 
@@ -40,5 +40,5 @@ class PBInstance:
         self.projects = [] if not projects else projects
         self.voters = [] if not voters else voters
     
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self.__dict__)

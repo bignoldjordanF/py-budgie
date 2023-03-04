@@ -10,7 +10,7 @@ class PBVoter:
             neighborhood: str = '',
             voting_method: str = '',
             votes: Dict[str, int] = None
-    ):
+    ) -> None:
         """
         Constructs a PBVoter object from an id, optional project information and a dictionary of votes over projects.
 
@@ -33,5 +33,5 @@ class PBVoter:
         self.voting_method = voting_method
         self.votes = {} if not votes else votes
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return str(self.__dict__)

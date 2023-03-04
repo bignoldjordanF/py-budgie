@@ -9,7 +9,7 @@ class PBProject:
             name: str = '',
             categories: List[str] = None,
             targets: List[str] = None
-    ):
+    ) -> None:
         """
         Constructs a PBProject object from an id, cost and optional project information.
 
@@ -27,5 +27,5 @@ class PBProject:
         self.categories = [] if not categories else categories
         self.targets = [] if not targets else targets
     
-    def __repr__(self):
+    def __repr__(self) -> str:
         return str(self.__dict__)
