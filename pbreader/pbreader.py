@@ -29,8 +29,8 @@ def read_pb_file(filepath: str) -> PBFileContents:
         - filepath (str): The path to the .pb file.
     """
     metadata: Dict[str, Union[str, int, float]] = defaultdict(int)
-    projects: Dict[int, Dict[str, Union[str, int, float]]] = defaultdict(defaultdict(str))
-    votes: Dict[int, Dict[str, Union[str, int]]] = defaultdict(defaultdict(str))
+    projects: Dict[int, Dict[str, Union[str, int, float]]] = defaultdict(defaultdict)
+    votes: Dict[int, Dict[str, Union[str, int]]] = defaultdict(defaultdict)
 
     if not filepath.endswith('.pb'):
         filepath += '.pb'
