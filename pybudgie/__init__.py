@@ -1,1 +1,1 @@
-from .instance import PBInstance
+from .instance import PBInstance, PBVoteType
