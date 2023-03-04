@@ -15,7 +15,7 @@ def generate_instance(
         max_num_voters: int = 10_000,
         voting_chance: float = 0.3,
         generate_metadata: bool = False
-):
+) -> PBInstance:
     """
     Randomly generates an approval-voting PBInstance within default or provided parameters.
     By approval voting, we mean that projects are either approved or they are not, i.e.,
