@@ -33,6 +33,9 @@ def generate_instance(
         - voting_chance (float): The probability of a voter voting on a project.
         - generate_metadata (bool): This is not yet implemented. It will randomly generate instance,
         project and voter string data.
+
+    returns:
+        - PBInstance
     """
 
     # Generate Budget
