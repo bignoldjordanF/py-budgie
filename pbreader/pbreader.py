@@ -1,5 +1,6 @@
 from typing import Dict, Union
 from dataclasses import dataclass
+from collections import defaultdict
 import csv
 
 
@@ -8,10 +9,10 @@ class PBFileContents:
     metadata: Dict[str, Union[str, int, float]]
     """Any metadata about the participatory budgeting instance."""
 
-    projects: Dict[int, Dict[str, Union[str, int, float]]]
+    projects: defaultdict[int, defaultdict[str, Union[str, int, float]]]
     """The project data represented as a projectId->data mapping."""
 
-    voters: Dict[int, Dict[str, Union[str, int]]]
+    voters: defaultdict[int, defaultdict[str, Union[str, int]]]
     """The voter data represented as a voterId->data mapping."""
 
 
@@ -27,9 +28,9 @@ def read_pb_file(filepath: str) -> PBFileContents:
     Parameters:
         - filepath (str): The path to the .pb file.
     """
-    metadata: Dict[str, Union[str, int, float]] = {}
-    projects: Dict[int, Dict[str, Union[str, int, float]]] = {}
-    votes: Dict[int, Dict[str, Union[str, int]]] = {}
+    metadata: Dict[str, Union[str, int, float]] = defaultdict(int)
+    projects: Dict[int, Dict[str, Union[str, int, float]]] = defaultdict(defaultdict(str))
+    votes: Dict[int, Dict[str, Union[str, int]]] = defaultdict(defaultdict(str))
 
     if not filepath.endswith('.pb'):
         filepath += '.pb'
