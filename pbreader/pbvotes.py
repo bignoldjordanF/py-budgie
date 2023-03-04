@@ -1,4 +1,17 @@
-def votes_to_dict(votes, vote_type, points=None, num_projects=0):
+from typing import List
+
+
+def votes_to_dict(votes: List[str], vote_type: str, points: List[str] = None, num_projects: int = 0):
+    """
+    Converts a list of votes [and points] to a dictionary of cardinal
+    utilities that each voter derives from each project.
+
+    Parameters:
+        - votes (List[str]): A list of project ids which the voter has voted for.
+        - vote_type (str): The type of voting method, i.e., approval, ordinal, cumulative or scoring.
+        - points (List[str]): A list of ordered points associated with each project id for cumulative or scoring methods.
+        - num_projects (int): The number of projects in the instance for ordinal voting.
+    """
     
     # Ordinal Voting
     if vote_type == 'ordinal':
