@@ -2,6 +2,16 @@ import pbreader
 import pybudgie
 
 
+def votes_to_dict(votes, vote_type, points=None, num_projects=0):
+    if vote_type=='ordinal':
+        num_projects = max(num_projects, len(votes))
+        return {pid: num_projects-count for count, pid in enumerate(votes)}
+    if vote_type=='cumulative' or vote_type=='scoring':
+        points = [0] * len(votes) if not points else points
+        return {pid: points[id] for id, pid in enumerate(votes)}
+    return {pid: 1 for pid in votes}  # Approval
+
+
 def main():
     contents = pbreader.read_pb_file('resources/poland_warszawa_2019_ursynow.pb')
     metadata, projects, voters = contents.metadata, contents.projects, contents.voters
@@ -31,6 +41,7 @@ def main():
             sex = voter['sex'],
             neighborhood = voter['neighborhood'],
             voting_method = voter['voting_method'],
+            votes = votes_to_dict(voter['vote'].split(','), 'approval')
         ))
     
     print(instance)
