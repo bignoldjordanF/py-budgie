@@ -10,7 +10,7 @@ class PBInstance:
             country: str = '',
             region: str = '',
             district: str = '',
-            category: str = '',
+            categories: List[str] = None,
             budget: int = 0,
             projects: List[PBProject] = None,
             voters: List[PBVoter] = None,
@@ -23,7 +23,7 @@ class PBInstance:
             - country (str): The country in which the instance takes place.
             - region (str): The region of said country in which in the instance takes place.
             - district (str): The district of said region in which the instance takes place.
-            - category (str): The category or categories of the instance.
+            - categories (List[str]): The categories of the instance.
             - budget (int): The maximum budget of the instance.
             - projects (List[PBProject]): A list of PBProject objects which wrap the projects to be funded.
             - voters (List[PBVoter]): A list of PBVoter objects which wrap the voters and their votes on the projects.
@@ -35,7 +35,7 @@ class PBInstance:
         self.country = country
         self.region = region
         self.district = district
-        self.category = category
+        self.category = [] if not categories else categories
         self.budget = budget
         self.projects = [] if not projects else projects
         self.voters = [] if not voters else voters
