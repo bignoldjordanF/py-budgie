@@ -52,8 +52,3 @@ def read_pb_file(filepath: str) -> PBFileContents:
                     votes[row[0]][key.strip()] = row[it+1].strip()
 
     return PBFileContents(metadata, projects, votes)
-
-
-if __name__ == '__main__':
-    contents: PBFileContents = read_pb_file('./resources/poland_warszawa_2019_ursynow.pb')
-    print(contents.metadata)
