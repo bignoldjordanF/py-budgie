@@ -3,7 +3,7 @@ import pybudgie
 
 
 def main():
-    contents = pbreader.read_pb_file('resources/poland_warszawa_2019_ursynow.pb')
+    contents = pbreader.read_pb_file('resources/france_toulouse_2019_.pb')
     metadata, projects, voters = contents.metadata, contents.projects, contents.voters
 
     instance = pybudgie.PBInstance(
@@ -32,10 +32,10 @@ def main():
             sex = voter['sex'],
             neighborhood = voter['neighborhood'],
             voting_method = voter['voting_method'],
-            votes = pbreader.votes_to_dict(voter['vote'].split(','), vote_type)
+            votes = pbreader.votes_to_dict(voter['vote'].split(','), vote_type, points=voter['points'].split(','), num_projects=len(instance.projects))
         ))
     
-    print(instance)
+    print(instance.voters)
 
 
 if __name__ == '__main__':
