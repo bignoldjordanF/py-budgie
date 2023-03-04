@@ -46,12 +46,12 @@ def read_pb_file(filepath: str) -> PBFileContents:
                 metadata[row[0]] = row[1].strip()
 
             elif section == 'projects':
-                projects[row[0]] = {}
+                projects[row[0]] = defaultdict(str)
                 for it, key in enumerate(header[1:]):
                     projects[row[0]][key.strip()] = row[it+1].strip()
             
             elif section == 'votes':
-                votes[row[0]] = {}
+                votes[row[0]] = defaultdict(str)
                 for it, key in enumerate(header[1:]):
                     votes[row[0]][key.strip()] = row[it+1].strip()
 
