@@ -168,3 +168,6 @@ poetry.toml
 
 # Ignore Folder
 ignore/
+
+# Ignore .pb Files
+*.pb
