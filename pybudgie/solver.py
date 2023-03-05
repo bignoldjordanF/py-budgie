@@ -15,3 +15,7 @@ class PBWelfare(Enum):
     EGALITARIAN = 1
     NASH = 2
 
+
+class PBSolver:
+    pass
+
