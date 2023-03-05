@@ -1,4 +1,4 @@
-from pybudgie import PBInstance, PBProject, PBVoter, PBWelfare
+from pybudgie import PBInstance, PBProject, PBVoter
 
 
 def simple():
@@ -69,9 +69,9 @@ def solve(instance: PBInstance):
     individually called to retrieve potential allocations.
     """
     
-    from pybudgie import PBSolver
+    from pybudgie import PBSolver, PBAlgorithm, PBWelfare
     solver: PBSolver = PBSolver(instance)
-    solver.solve(PBAlgorithm.GREEDY, PBWelfare.UTILITARIAN)
+    result = solver.solve(PBAlgorithm.GREEDY, PBWelfare.UTILITARIAN)
 
 
 def main():
