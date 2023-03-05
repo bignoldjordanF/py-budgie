@@ -1,4 +1,4 @@
-from pybudgie import PBInstance, PBProject, PBVoter
+from pybudgie import PBInstance, PBProject, PBVoter, PBWelfare
 
 
 def simple():
@@ -50,4 +50,6 @@ def parsed():
 
 if __name__ == '__main__':
     instance = generated()
-    print(instance)
+
+    from pybudgie.solvers import greedy_solver
+    result = greedy_solver(instance, PBWelfare.UTILITARIAN)
