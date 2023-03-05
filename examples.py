@@ -2,6 +2,11 @@ from pybudgie import PBInstance, PBProject, PBVoter, PBWelfare
 
 
 def simple():
+    """
+    An example demonstrating the creation of a PBInstance with
+    manually defined values.
+    """
+
     # Syntax: PBInstance(
     #   Optional Parameters...
     # )
@@ -26,6 +31,11 @@ def simple():
 
 
 def generated():
+    """
+    An example demonstrating the random generation of a
+    PBInstance with some predefined limits.
+    """
+
     from pybudgie.pbgenerator import generate_instance
 
     # Syntax: generate_instance(
@@ -40,6 +50,11 @@ def generated():
 
 
 def parsed():
+    """
+    An example demonstrating the creation of a PBInstance
+    from a .pb file in the format provided by pabulib.org.
+    """
+
     from pybudgie.pbreader import read_file
 
     # Syntax: read_file('path/to/pb/file.pb')
@@ -48,8 +63,21 @@ def parsed():
     return instance
 
 
-if __name__ == '__main__':
-    instance = generated()
+def solve(instance: PBInstance):
+    """
+    An example showing how the solving algorithms can be
+    individually called to retrieve potential allocations.
+    """
+    
+    from pybudgie import PBSolver
+    solver: PBSolver = PBSolver(instance)
+    solver.solve(PBAlgorithm.GREEDY, PBWelfare.UTILITARIAN)
 
-    from pybudgie.solvers import greedy_solver
-    result = greedy_solver(instance, PBWelfare.UTILITARIAN)
+
+def main():
+    instance: PBInstance = parsed()
+    solve(instance)
+
+
+if __name__ == '__main__':
+    main()
