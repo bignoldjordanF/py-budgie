@@ -23,7 +23,7 @@ def simple():
 
     # Add Voters & Votes
     instance.add_voter(PBVoter(id=1, utilities={1: 1, 3: 1, 4: 1}))
-    instance.vadd_voter(PBVoter(id=2, utilities={2: 1, 3: 1}))
+    instance.add_voter(PBVoter(id=2, utilities={2: 1, 3: 1}))
     instance.add_voter(PBVoter(id=3, utilities={3: 1, 4: 1}))
     instance.add_voter(PBVoter(id=4, utilities={1: 1}))
 
@@ -73,7 +73,9 @@ def solve(instance: PBInstance):
     from pybudgie import PBSolver, PBAlgorithm, PBWelfare
     solver: PBSolver = PBSolver(instance)
     result = solver.solve(PBAlgorithm.GREEDY, PBWelfare.UTILITARIAN)
+    result2 = solver.solve(PBAlgorithm.RATIO_GREEDY, PBWelfare.UTILITARIAN)
     print(result)
+    print(result2)
 
 
 def main():

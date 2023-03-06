@@ -1,7 +1,7 @@
 from .instance import PBInstance
 from .project import PBProject
 from .voter import PBVoter
-from .algorithms import greedy_solver
+from .algorithms import greedy_solver, ratio_greedy_solver
 
 from typing import Tuple, List, Dict
 from collections import defaultdict
@@ -112,7 +112,12 @@ class PBSolver:
             )
         
         if algorithm == PBAlgorithm.RATIO_GREEDY:
-            pass
+            return ratio_greedy_solver(
+                budget=self.instance.budget,
+                projects=projects,
+                costs=costs,
+                utilities=utilities
+            )
 
         if algorithm == PBAlgorithm.SIMULATED_ANNEALING:
             pass
