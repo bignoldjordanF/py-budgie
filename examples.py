@@ -22,10 +22,10 @@ def simple():
     instance.projects.append(PBProject(id=4, cost=8_000))
 
     # Add Voters & Votes
-    instance.voters.append(PBVoter(id=1, votes={1: 1, 3: 1, 4: 1}))
-    instance.voters.append(PBVoter(id=2, votes={2: 1, 3: 1}))
-    instance.voters.append(PBVoter(id=3, votes={3: 1, 4: 1}))
-    instance.voters.append(PBVoter(id=3, votes={1: 1}))
+    instance.voters.append(PBVoter(id=1, utilities={1: 1, 3: 1, 4: 1}))
+    instance.voters.append(PBVoter(id=2, utilities={2: 1, 3: 1}))
+    instance.voters.append(PBVoter(id=3, utilities={3: 1, 4: 1}))
+    instance.voters.append(PBVoter(id=4, utilities={1: 1}))
 
     return instance
 
@@ -44,6 +44,7 @@ def generated():
     instance: PBInstance = generate_instance(
         min_budget=1_000_000,
         max_budget=10_000_000,
+        voting_chance=0.1
         # ...
     )
     return instance
@@ -59,7 +60,7 @@ def parsed():
 
     # Syntax: read_file('path/to/pb/file.pb')
     instance: PBInstance = \
-        read_file('resources/poland_warszawa_2019_ursynow.pb')
+        read_file('resources/france_toulouse_2019_.pb')
     return instance
 
 
