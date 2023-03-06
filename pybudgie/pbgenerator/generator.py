@@ -13,13 +13,16 @@ def generate_instance(
         max_project_cost: int = 1_000_000,
         min_num_voters: int = 500,
         max_num_voters: int = 10_000,
+        min_utility: int = 0,
+        max_utility: int = 10,
         voting_chance: float = 0.3,
         generate_metadata: bool = False
 ) -> PBInstance:
     """
-    Randomly generates an approval-voting PBInstance within default or provided parameters.
-    By approval voting, we mean that projects are either approved or they are not, i.e.,
-    binary utilities.
+    Randomly generates an approval-voting or score-voting PBInstance within default or
+    provided parameters. By approval voting, we mean that projects are either approved
+    or they are not, i.e., binary utilities. For approval voting, set the min and max
+    utility values to 0 and 1 respectively.
 
     Parameters:
         - min_budget (int): The minimum budget that will be generated for the instance.
@@ -30,6 +33,8 @@ def generate_instance(
         - max_project_cost (int): The maximum project cost possible for each project in the instance.
         - min_num_voters (int): The minimum number of voters voting on projects in the instance.
         - max_num_voters (int): The maximum number of voters voting on projects in the instance.
+        - min_utility (int): The minimum utility a voter might derive from a project.
+        - max_utility (int): The maximum utility a voter might derive from a project.
         - voting_chance (float): The probability of a voter voting on a project.
         - generate_metadata (bool): This is not yet implemented. It will randomly generate instance,
         project and voter string data.
@@ -68,7 +73,7 @@ def generate_instance(
             # The voting chance decides the number
             # of projects voted on per user:
             if random.random() < voting_chance:
-                votes[pid+1] = 1
+                votes[pid+1] = random.randint(min_utility, max_utility)
         instance.voters.append(PBVoter(
             id=id+1,
             utilities=votes
