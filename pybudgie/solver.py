@@ -3,7 +3,9 @@ from .project import PBProject
 from .voter import PBVoter
 from .algorithms import greedy_solver, \
     ratio_greedy_solver, \
-    simulated_annealing_solver
+    simulated_annealing_solver, \
+    genetic_algorithm_solver
+        
 
 from typing import Tuple, List, Dict
 from collections import defaultdict
@@ -130,7 +132,12 @@ class PBSolver:
             )
 
         if algorithm == PBAlgorithm.GENETIC_ALGORITHM:
-            pass
+            return genetic_algorithm_solver(
+                budget=self.instance.budget,
+                projects=projects,
+                costs=costs,
+                utilities=utilities
+            )
 
         if algorithm == PBAlgorithm.DYNAMIC_PROGRAMMING:
             pass

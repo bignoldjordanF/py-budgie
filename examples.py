@@ -83,6 +83,10 @@ def solve(instance: PBInstance):
     print(f'Simulated Annealing: {simulated_annealing}')
     print()
 
+    genetic_algorithm = solver.solve(PBAlgorithm.GENETIC_ALGORITHM, PBWelfare.UTILITARIAN)
+    print(f'Genetic Algorithm: {genetic_algorithm}')
+    print()
+
 
 def main():
     instance: PBInstance = parsed()
