@@ -60,7 +60,7 @@ def parsed():
 
     # Syntax: read_file('path/to/pb/file.pb')
     instance: PBInstance = \
-        read_file('resources/france_toulouse_2019_.pb')
+        read_file('resources/poland_warszawa_2019_ursynow.pb')
     return instance
 
 
@@ -72,7 +72,8 @@ def solve(instance: PBInstance):
     
     from pybudgie import PBSolver, PBAlgorithm, PBWelfare
     solver: PBSolver = PBSolver(instance)
-    result = solver.solve(PBAlgorithm.GREEDY, PBWelfare.UTILITARIAN)
+    result = solver.solve(PBAlgorithm.GREEDY, PBWelfare.NASH)
+    print(result)
 
 
 def main():

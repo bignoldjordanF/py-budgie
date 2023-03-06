@@ -2,8 +2,10 @@ from .instance import PBInstance
 from .project import PBProject
 from .voter import PBVoter
 
+from .algorithms import greedy_solver
+
+from typing import Tuple, List, Dict
 from collections import defaultdict
-from typing import Tuple, List
 from enum import Enum
 import math
 
@@ -90,7 +92,7 @@ class PBWelfare(Enum):
             if flattened[pid] == -1:
                 flattened[pid] = 0
         
-        return flattened.keys(), flattened.values()
+        return flattened
 
 
 class PBSolver:
@@ -98,8 +100,37 @@ class PBSolver:
         self.instance: PBInstance = instance
     
     def solve(self, algorithm: PBAlgorithm, maximise_welfare: PBWelfare) -> Tuple[List[int], int]:
-        flattened: List[int] = maximise_welfare.flatten(
+        flattened: Dict[str, int] = maximise_welfare.flatten(
             voters=self.instance.voters,
             projects=self.instance.projects
         )
-        print(flattened)
+        costs_dict: Dict[str, int] = {project.id: project.cost for project in self.instance.projects}
+
+        projects: List[str] = [project.id for project in self.instance.projects]
+        costs: List[int] = [costs_dict[project_id] for project_id in projects]
+        utilities: List[int] = [flattened[project_id] for project_id in projects]
+
+        if algorithm == PBAlgorithm.GREEDY:
+            return greedy_solver(
+                budget=self.instance.budget,
+                projects=projects,
+                costs=costs,
+                utilities=utilities
+            )
+        
+        if algorithm == PBAlgorithm.RATIO_GREEDY:
+            pass
+
+        if algorithm == PBAlgorithm.SIMULATED_ANNEALING:
+            pass
+
+        if algorithm == PBAlgorithm.GENETIC_ALGORITHM:
+            pass
+
+        if algorithm == PBAlgorithm.DYNAMIC_PROGRAMMING:
+            pass
+
+        if algorithm == PBAlgorithm.BRANCH_AND_BOUND:
+            pass
+
+        return [], 0
