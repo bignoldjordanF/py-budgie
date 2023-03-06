@@ -82,11 +82,11 @@ def simulated_annealing_solver(
         num_non_improve: int = 100_000
 ) -> Tuple[List[int], int]:
     """
-    A fast approximation scheme for participatory budgeting problems
-    formulated as the binary knapsack problem. We pose each solution
-    to the problem as an allocation, and generate neighbours by
-    including or excluding a single project. The simulated annealing
-    algorithm works as follows:
+    A relatively fast approximation scheme for participatory budgeting
+    problems formulated as the binary knapsack problem. We pose each
+    solution to the problem as an allocation, and generate neighbours
+    by including or excluding a single project. The simulated 
+    annealing algorithm works as follows:
 
     We generate a neighbouring solution from the current solution
     and compare their utilities. A better utility means the neighbour
