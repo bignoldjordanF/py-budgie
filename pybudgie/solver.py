@@ -84,6 +84,7 @@ class PBSolver:
     
     def solve(self, algorithm: PBAlgorithm, maximise_welfare: PBWelfare) -> Tuple[List[int], int]:
         # TODO: This kinda sucks. It's just not very elegant.
+        # Maybe the algorithms can just take the instances instead.
         flattened: Dict[str, int] = maximise_welfare.flatten(
             voters=self.instance.voters,
             projects=self.instance.projects
