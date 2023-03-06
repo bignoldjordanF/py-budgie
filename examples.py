@@ -91,6 +91,10 @@ def solve(instance: PBInstance):
     print(f'Dynamic Programming: {dyn_prog}')
     print()
 
+    branch_bound = solver.solve(PBAlgorithm.BRANCH_AND_BOUND, PBWelfare.UTILITARIAN)
+    print(f'Branch & Bound: {branch_bound}')
+    print()
+
 
 def main():
     instance: PBInstance = parsed()

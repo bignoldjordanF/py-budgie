@@ -5,7 +5,8 @@ from .algorithms import greedy_solver, \
     ratio_greedy_solver, \
     simulated_annealing_solver, \
     genetic_algorithm_solver, \
-    dynamic_programming_solver
+    dynamic_programming_solver, \
+    branch_and_bound_solver
         
 
 from typing import Tuple, List, Dict
@@ -149,6 +150,11 @@ class PBSolver:
             )
 
         if algorithm == PBAlgorithm.BRANCH_AND_BOUND:
-            pass
+            return branch_and_bound_solver(
+                budget=self.instance.budget,
+                projects=projects,
+                costs=costs,
+                utilities=utilities
+            )
 
         return [], 0
