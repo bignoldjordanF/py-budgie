@@ -59,7 +59,7 @@ class SAAllocation:
         # neighbours may reduce the total weight below the
         # knapsack capacity:
         if _cost > self.budget:
-            _cost = -_cost
+            _utility = -_utility
         
         return SAAllocation(
             budget=self.budget,
