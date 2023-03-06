@@ -22,18 +22,42 @@ class AllocationNode:
 
 
 def __bound(node: AllocationNode, budget: int, candidates: List[Tuple[int, int, int]]) -> float:
+    """
+    Computes the upper bound for an allocation node by relaxing the binary constraint, i.e.,
+    such that fractions of items can be included in the allocation (fractional knapsack), and
+    computing the maximum possible utility given the projects already in the allocation. An
+    upper bound higher than the current utility implies a 'promising' node. We choose this
+    relaxation because it can exactly solve the (fractional knapsack) problem in linear time.
+
+    Parameters:
+        - node (AllocationNode): A decision tree node for which to find the upper bound.
+        - budget (int): The budget of the instance.
+        - candidates (Tuple[int, int, int]): A sorted list of candidate tuples (id, utility, cost).
+    
+    Returns:
+        - float: The upper bound on the utility for this node.
+    """
+
+    # An invalid node or an exhausted budget
+    # means there is nothing to be done:
     if node.cost >= budget:
         return 0
     
+    # Initialise values to search the remaining
+    # projects:
     utility_bound: int = node.utility
     level: int = node.level + 1
     cost: int = node.cost
 
+    # Add as many full projects as possible within
+    # the budget:
     while level < len(candidates) and candidates[level][2] <= budget:
         cost += candidates[level][2]
         utility_bound += candidates[level][1]
         level += 1
     
+    # For the next project that is too expensive,
+    # add as much of that project as possible:
     if level < len(candidates):
         utility_bound += (budget - cost) * \
             candidates[level][1] / candidates[level][2]
