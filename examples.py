@@ -72,7 +72,7 @@ def solve(instance: PBInstance):
     
     from pybudgie import PBSolver, PBAlgorithm, PBWelfare
     solver: PBSolver = PBSolver(instance)
-    result = solver.solve(PBAlgorithm.GREEDY, PBWelfare.NASH)
+    result = solver.solve(PBAlgorithm.GREEDY, PBWelfare.UTILITARIAN)
     print(result)
 
 

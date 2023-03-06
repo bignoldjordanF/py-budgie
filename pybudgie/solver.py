@@ -26,8 +26,6 @@ class PBAlgorithm(Enum):
 
 class PBWelfare(Enum):
     UTILITARIAN = 0
-    EGALITARIAN = 1
-    NASH = 2
 
     def flatten(
             self,
@@ -77,21 +75,6 @@ class PBWelfare(Enum):
                 if self == PBWelfare.UTILITARIAN:
                     flattened[project] = max(0, flattened[project]) + utility
 
-                # Egalitarian Welfare
-                elif self == PBWelfare.EGALITARIAN:
-                    if project not in flattened or flattened[project] == -1:
-                        flattened[project] = utility
-                    flattened[project] = min(flattened[project], utility)
-
-                # Nash Welfare
-                elif self == PBWelfare.NASH:
-                    flattened[project] = max(0, flattened[project]) + int(math.log(max(1, utility)))
-
-        # We must convert any null utilities to zeroes:
-        for pid in flattened:
-            if flattened[pid] == -1:
-                flattened[pid] = 0
-        
         return flattened
 
 
@@ -100,12 +83,14 @@ class PBSolver:
         self.instance: PBInstance = instance
     
     def solve(self, algorithm: PBAlgorithm, maximise_welfare: PBWelfare) -> Tuple[List[int], int]:
+        # TODO: This kinda sucks. It's just not very elegant.
         flattened: Dict[str, int] = maximise_welfare.flatten(
             voters=self.instance.voters,
             projects=self.instance.projects
         )
         costs_dict: Dict[str, int] = {project.id: project.cost for project in self.instance.projects}
 
+        # Convert dictionaries to lists for solving:
         projects: List[str] = [project.id for project in self.instance.projects]
         costs: List[int] = [costs_dict[project_id] for project_id in projects]
         utilities: List[int] = [flattened[project_id] for project_id in projects]
