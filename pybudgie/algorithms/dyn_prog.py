@@ -8,6 +8,9 @@ def dynamic_programming_solver(
         utilities: List[int]
 ) -> Tuple[List[int], int]:
     """
+    An exact algorithm for participatory budgeting problems formulated as the
+    binary knapsack problem.
+
     We build a dynamic programming matrix that holds the maximum value achievable
     at any (i, j) pair, where i means we only have access to the first i projects, 
     i.e., {1, 2, ..., i}, and j means we only have j budget available. The base
