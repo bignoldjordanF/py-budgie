@@ -59,7 +59,7 @@ def parsed():
 
     # Syntax: read_file('path/to/pb/file.pb')
     instance: PBInstance = \
-        read_file('resources/poland_warszawa_2019_ursynow.pb')
+        read_file('resources/france_toulouse_2019_.pb')
     return instance
 
 
@@ -85,6 +85,10 @@ def solve(instance: PBInstance):
 
     genetic_algorithm = solver.solve(PBAlgorithm.GENETIC_ALGORITHM, PBWelfare.UTILITARIAN)
     print(f'Genetic Algorithm: {genetic_algorithm}')
+    print()
+
+    dyn_prog = solver.solve(PBAlgorithm.DYNAMIC_PROGRAMMING, PBWelfare.UTILITARIAN)
+    print(f'Dynamic Programming: {dyn_prog}')
     print()
 
 
