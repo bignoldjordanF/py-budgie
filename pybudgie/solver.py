@@ -1,13 +1,11 @@
 from .instance import PBInstance
 from .project import PBProject
 from .voter import PBVoter
-
 from .algorithms import greedy_solver
 
 from typing import Tuple, List, Dict
 from collections import defaultdict
 from enum import Enum
-import math
 
 
 class PBAlgorithm(Enum):
@@ -74,15 +72,37 @@ class PBSolver:
         self.instance: PBInstance = instance
     
     def solve(self, algorithm: PBAlgorithm, maximise_welfare: PBWelfare) -> Tuple[List[int], int]:
+        """
+        Finds an allocation for the participatory budgeting instance using the provided algorithm
+        to maximise the provided welfare function.
+
+        Parameters:
+            - algorithm (PBAlgorithm): The algorithm to use to find the allocation by maximising
+            the welfare function, e.g., PBAlgorithm.GREEDY, PBAlgorithm.GENETIC_ALGORITHM, etc.
+            - maximise_welfare (PBWelfare): The welfare function to be maximised in finding
+            the allocation, e.g., PBWelfare.UTILITARIAN.
+
+        Returns:
+            - Tuple[List[int], int]: A pair containing the allocation found, as a list of project
+            ids, and the overall value with regard to the welfare function.
+        """
+
+        # TODO: Rethink the flattening function, i.e., do we want it to
+        # return a dictionary which we need to process further?
+        # Do we want to do this every time we call this function?
+
+        # Flatten the individual voter utilities into a one-dimension:
         flattened: Dict[str, int] = maximise_welfare.flatten(
             voters=self.instance.voters,
             projects=self.instance.projects
         )
 
+        # Convert the instance into three separate lists for solving:
         projects: List[str] = [project for project in flattened.keys()]
         costs: List[int] = [self.instance.get_project(project_id).cost for project_id in flattened.keys()]
         utilities: List[int] = [project for project in flattened.values()]
 
+        # Compute the result using the provided algorithm:
         if algorithm == PBAlgorithm.GREEDY:
             return greedy_solver(
                 budget=self.instance.budget,
