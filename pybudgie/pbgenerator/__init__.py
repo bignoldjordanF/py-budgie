@@ -1,1 +1,1 @@
-from .generator import generate_instance
+from .pbgenerator import generate_instance
