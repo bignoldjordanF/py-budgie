@@ -43,30 +43,70 @@ class PBInstance:
     # --- Projects ---
     @property
     def projects(self) -> List[PBProject]:
+        """
+        Returns:
+            - List[PBProject]: The projects in the instance as a list.
+        """
         return self._projects.values()
 
     def get_project(self, project_id: int) -> PBProject:
+        """
+        Parameters:
+            - project_id (int): A project id whose PBProject object to return.
+        
+        Returns:
+            - PBProject: A PBProject object with the supplied project id.
+        """
         return self._projects[project_id]
 
     def add_project(self, project: PBProject) -> None:
+        """
+        Parameters:
+            - project (PBProject): A PBProject object to add to the instance.
+        """
         self._projects[project.id] = project
 
     def remove_project(self, project_id: PBProject) -> None:
+        """
+        Parameters:
+            - project_id (int): The project id of the PBProject object to
+            remove from the instance.
+        """
         if project_id in self._projects:
             self._projects.pop(project_id)
 
     # --- Voters ---
     @property
     def voters(self) -> List[PBVoter]:
+        """
+        Returns:
+            - List[PBVoter]: The voters in the instance as a list.
+        """
         return self._voters.values()
 
     def get_voter(self, voter_id: int) -> PBVoter:
+        """
+        Parameters:
+            - voter_id (int): A voter id whose PBVoter object to return.
+        
+        Returns:
+            - PBVoter: A PBVoter object with the supplied voter id.
+        """
         return self._voters[voter_id]
 
     def add_voter(self, voter: PBVoter) -> None:
+        """
+        Parameters:
+            - voter (PBVoter): A PBVoter object to add to the instance.
+        """
         self._voters[voter.id] = voter
 
     def remove_voter(self, voter_id: PBVoter) -> None:
+        """
+        Parameters:
+            - voter_id (int): The voter id of the PBVoter object to
+            remove from the instance.
+        """
         if voter_id in self._voters:
             self._voters.pop(voter_id)
 
