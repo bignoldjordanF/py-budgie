@@ -1,3 +1,3 @@
-# py-Budgie
+# py-budgie
 
 ## Description
