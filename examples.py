@@ -1,4 +1,7 @@
 from pybudgie import PBInstance, PBProject, PBVoter
+from pybudgie import PBSolver, PBAlgorithm, PBWelfare
+from pybudgie.pbgenerator import generate_instance
+from pybudgie.pbreader import read_file
 
 
 def simple():
@@ -36,8 +39,6 @@ def generated():
     PBInstance with some predefined limits.
     """
 
-    from pybudgie.pbgenerator import generate_instance
-
     # Syntax: generate_instance(
     #   Optional Parameters...
     # )
@@ -56,8 +57,6 @@ def parsed():
     from a .pb file in the format provided by pabulib.org.
     """
 
-    from pybudgie.pbreader import read_file
-
     # Syntax: read_file('path/to/pb/file.pb')
     instance: PBInstance = \
         read_file('resources/poland_warszawa_2019_ursynow.pb')
@@ -70,12 +69,19 @@ def solve(instance: PBInstance):
     individually called to retrieve potential allocations.
     """
     
-    from pybudgie import PBSolver, PBAlgorithm, PBWelfare
     solver: PBSolver = PBSolver(instance)
-    result = solver.solve(PBAlgorithm.GREEDY, PBWelfare.UTILITARIAN)
-    result2 = solver.solve(PBAlgorithm.RATIO_GREEDY, PBWelfare.UTILITARIAN)
-    print(result)
-    print(result2)
+
+    greedy = solver.solve(PBAlgorithm.GREEDY, PBWelfare.UTILITARIAN)
+    print(f'Greedy: {greedy}')
+    print()
+
+    ratio_greedy = solver.solve(PBAlgorithm.RATIO_GREEDY, PBWelfare.UTILITARIAN)
+    print(f'Ratio Greedy: {ratio_greedy}')
+    print()
+
+    simulated_annealing = solver.solve(PBAlgorithm.SIMULATED_ANNEALING, PBWelfare.UTILITARIAN)
+    print(f'Simulated Annealing: {simulated_annealing}')
+    print()
 
 
 def main():
