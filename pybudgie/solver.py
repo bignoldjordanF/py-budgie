@@ -83,7 +83,7 @@ class PBWelfare(Enum):
 
                 # Nash Welfare
                 elif self == PBWelfare.NASH:
-                    flattened[project] = max(1, flattened[project]) + int(math.log(max(1, utility)))
+                    flattened[project] = max(0, flattened[project]) + int(math.log(max(1, utility)))
 
         # We must convert any null utilities to zeroes:
         for pid in flattened:
