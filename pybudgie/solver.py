@@ -10,11 +10,6 @@ from enum import Enum
 import math
 
 
-# TODO: Think about the utility flattening process. 
-# I'm almost certain the egaliatarian and nash
-# welfare ideas do not make any sense.
-
-
 class PBAlgorithm(Enum):
     GREEDY = 0
     RATIO_GREEDY = 1
@@ -51,14 +46,10 @@ class PBWelfare(Enum):
             total utility for each project (sequentially).
         """
 
-        # If the projects list is provided, and thus we want to
-        # include them in the election (even if no votes were
-        # cast), then we add them all here with a null value
-        # and initialise them depending on the welfare:
         flattened = defaultdict(int)  # Project ID -> Utility
         if projects:
             for project in projects:
-                flattened[project.id] = -1
+                flattened[project.id] = 0
 
         # We aggregate the utilities of all the voters,
         # using the welfare functions:
@@ -73,7 +64,7 @@ class PBWelfare(Enum):
 
                 # Utilitarian Welfare
                 if self == PBWelfare.UTILITARIAN:
-                    flattened[project] = max(0, flattened[project]) + utility
+                    flattened[project] += utility
 
         return flattened
 
@@ -83,18 +74,14 @@ class PBSolver:
         self.instance: PBInstance = instance
     
     def solve(self, algorithm: PBAlgorithm, maximise_welfare: PBWelfare) -> Tuple[List[int], int]:
-        # TODO: This kinda sucks. It's just not very elegant.
-        # Maybe the algorithms can just take the instances instead.
         flattened: Dict[str, int] = maximise_welfare.flatten(
             voters=self.instance.voters,
             projects=self.instance.projects
         )
-        costs_dict: Dict[str, int] = {project.id: project.cost for project in self.instance.projects}
 
-        # Convert dictionaries to lists for solving:
-        projects: List[str] = [project.id for project in self.instance.projects]
-        costs: List[int] = [costs_dict[project_id] for project_id in projects]
-        utilities: List[int] = [flattened[project_id] for project_id in projects]
+        projects: List[str] = [project for project in flattened.keys()]
+        costs: List[int] = [self.instance.get_project(project_id).cost for project_id in flattened.keys()]
+        utilities: List[int] = [project for project in flattened.values()]
 
         if algorithm == PBAlgorithm.GREEDY:
             return greedy_solver(

@@ -62,7 +62,7 @@ def generate_instance(
 
     # Generate Projects
     for id in range(num_projects):
-        instance.projects.append(PBProject(
+        instance.add_project(PBProject(
             id=id+1,
             cost=random.randint(min_project_cost, max_project_cost),
             name=f'Random Project {id}'
@@ -79,7 +79,7 @@ def generate_instance(
             # of projects voted on per user:
             if random.random() < voting_chance:
                 votes[pid+1] = random.randint(min_utility, max_utility)
-        instance.voters.append(PBVoter(
+        instance.add_voter(PBVoter(
             id=id+1,
             utilities=votes
         ))

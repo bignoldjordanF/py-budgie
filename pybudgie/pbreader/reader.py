@@ -137,7 +137,7 @@ def read_file(filepath: str) -> PBInstance:
             not project['cost'].isnumeric():
                 project['cost'] = 0
 
-        instance.projects.append(PBProject(
+        instance.add_project(PBProject(
             id=pid,
             name=project['name'],
             cost=int(project['cost']),
@@ -167,7 +167,7 @@ def read_file(filepath: str) -> PBInstance:
             num_projects=num_projects
         )
 
-        instance.voters.append(PBVoter(
+        instance.add_voter(PBVoter(
             id=vid,
             age=voter['age'],
             sex=voter['sex'],
