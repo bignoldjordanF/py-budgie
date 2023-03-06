@@ -48,7 +48,11 @@ def derive_utilities(
         expressed their preferences over.
     """
 
+    # "approval", "ordinal", "cumulative" or "scoring"
     stripped_voting_method = vote_type.strip().lower()
+
+    # Convert Points To Integers
+    points = [int(point) if point.isnumeric() else 0 for point in points]
 
     # Ordinal Voting Method
     if stripped_voting_method == 'ordinal':
@@ -169,7 +173,7 @@ def read_file(filepath: str) -> PBInstance:
             sex=voter['sex'],
             neighborhood=voter['neighborhood'],
             voting_method=voter['voting_method'],
-            votes=voter_utilities
+            utilities=voter_utilities
         ))
     
     return instance
