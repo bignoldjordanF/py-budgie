@@ -68,10 +68,10 @@ def generate_instance(
             # The voting chance decides the number
             # of projects voted on per user:
             if random.random() < voting_chance:
-                votes[pid] = 1
+                votes[pid+1] = 1
         instance.voters.append(PBVoter(
             id=id+1,
-            votes=votes
+            utilities=votes
         ))
 
     return instance
