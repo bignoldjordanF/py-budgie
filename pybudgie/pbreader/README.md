@@ -1,4 +1,4 @@
-# py-Budgie
+# py-budgie
 
 ## Files Source
 
