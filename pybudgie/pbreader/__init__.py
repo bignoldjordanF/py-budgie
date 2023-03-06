@@ -1,1 +1,1 @@
-from .pbreader import read_file
+from .reader import read_file
