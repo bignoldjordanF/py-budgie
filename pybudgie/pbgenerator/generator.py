@@ -4,6 +4,11 @@ from ..voter import PBVoter
 import random
 
 
+# TODO: This is definitely random and definitely
+# not a simulation, which doesn't really represent
+# true participatory budgeting instances.
+
+
 def generate_instance(
         min_budget: int = 100_000,
         max_budget: int = 1_000_000,
@@ -13,7 +18,7 @@ def generate_instance(
         max_project_cost: int = 1_000_000,
         min_num_voters: int = 500,
         max_num_voters: int = 10_000,
-        min_utility: int = 0,
+        min_utility: int = 1,
         max_utility: int = 10,
         voting_chance: float = 0.3,
         generate_metadata: bool = False
