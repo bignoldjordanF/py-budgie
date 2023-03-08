@@ -7,11 +7,14 @@ from .algorithms import greedy_solver, \
     genetic_algorithm_solver, \
     dynamic_programming_solver, \
     branch_and_bound_solver
+from .result import PBResult
         
 
+from timeit import default_timer as timer
 from typing import Tuple, List, Dict
 from collections import defaultdict
 from enum import Enum
+import logging
 
 
 class PBAlgorithm(Enum):
@@ -77,7 +80,7 @@ class PBSolver:
     def __init__(self, instance: PBInstance):
         self.instance: PBInstance = instance
     
-    def solve(self, algorithm: PBAlgorithm, maximise_welfare: PBWelfare) -> Tuple[List[int], int]:
+    def solve(self, algorithm: PBAlgorithm, maximise_welfare: PBWelfare) -> PBResult:
         """
         Finds an allocation for the participatory budgeting instance using the provided algorithm
         to maximise the provided welfare function.
@@ -97,6 +100,8 @@ class PBSolver:
         # return a dictionary which we need to process further?
         # Do we want to do this every time we call this function?
 
+        start_time = timer()
+
         # Flatten the individual voter utilities into a one-dimension:
         flattened: Dict[str, int] = maximise_welfare.flatten(
             voters=self.instance.voters,
@@ -108,9 +113,12 @@ class PBSolver:
         costs: List[int] = [self.instance.get_project(project_id).cost for project_id in flattened.keys()]
         utilities: List[int] = [project for project in flattened.values()]
 
+        allocation: List[int] = []
+        utility: int = 0
+
         # Compute the result using the provided algorithm:
         if algorithm == PBAlgorithm.GREEDY:
-            return greedy_solver(
+            allocation, utility = greedy_solver(
                 budget=self.instance.budget,
                 projects=projects,
                 costs=costs,
@@ -118,7 +126,7 @@ class PBSolver:
             )
         
         if algorithm == PBAlgorithm.RATIO_GREEDY:
-            return ratio_greedy_solver(
+            allocation, utility = ratio_greedy_solver(
                 budget=self.instance.budget,
                 projects=projects,
                 costs=costs,
@@ -126,7 +134,7 @@ class PBSolver:
             )
 
         if algorithm == PBAlgorithm.SIMULATED_ANNEALING:
-            return simulated_annealing_solver(
+            allocation, utility = simulated_annealing_solver(
                 budget=self.instance.budget,
                 projects=projects,
                 costs=costs,
@@ -134,15 +142,18 @@ class PBSolver:
             )
 
         if algorithm == PBAlgorithm.GENETIC_ALGORITHM:
-            return genetic_algorithm_solver(
+            allocation, utility = genetic_algorithm_solver(
                 budget=self.instance.budget,
                 projects=projects,
                 costs=costs,
-                utilities=utilities
+                utilities=utilities,
+                population_size=1000,
+                num_generations=250
             )
 
         if algorithm == PBAlgorithm.DYNAMIC_PROGRAMMING:
-            return dynamic_programming_solver(
+            logging.warning('Dynamic programming is an exact algorithm and may take a long time!')
+            allocation, utility = dynamic_programming_solver(
                 budget=self.instance.budget,
                 projects=projects,
                 costs=costs,
@@ -150,11 +161,15 @@ class PBSolver:
             )
 
         if algorithm == PBAlgorithm.BRANCH_AND_BOUND:
-            return branch_and_bound_solver(
+            logging.warning('Branch and bound is an exact algorithm and may take a long time!')
+            allocation, utility = branch_and_bound_solver(
                 budget=self.instance.budget,
                 projects=projects,
                 costs=costs,
                 utilities=utilities
             )
 
-        return [], 0
+        end_time = timer()
+        runtime_ms: float = (end_time - start_time) * 1_000
+
+        return PBResult(allocation, utility, runtime_ms)

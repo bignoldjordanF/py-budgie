@@ -1,5 +1,6 @@
 from pybudgie import PBInstance, PBProject, PBVoter
 from pybudgie import PBSolver, PBAlgorithm, PBWelfare
+from pybudgie import PBResult
 from pybudgie.pbgenerator import generate_instance
 from pybudgie.pbreader import read_file
 
@@ -59,7 +60,7 @@ def parsed():
 
     # Syntax: read_file('path/to/pb/file.pb')
     instance: PBInstance = \
-        read_file('resources/france_toulouse_2019_.pb')
+        read_file('resources/poland_warszawa_2019_ursynow.pb')
     return instance
 
 
@@ -70,30 +71,15 @@ def solve(instance: PBInstance):
     """
     
     solver: PBSolver = PBSolver(instance)
+    result: PBResult = solver.solve(PBAlgorithm.DYNAMIC_PROGRAMMING, PBWelfare.UTILITARIAN)
+    print(result.runtime_ms)
 
-    greedy = solver.solve(PBAlgorithm.GREEDY, PBWelfare.UTILITARIAN)
-    print(f'Greedy: {greedy}')
-    print()
-
-    ratio_greedy = solver.solve(PBAlgorithm.RATIO_GREEDY, PBWelfare.UTILITARIAN)
-    print(f'Ratio Greedy: {ratio_greedy}')
-    print()
-
-    simulated_annealing = solver.solve(PBAlgorithm.SIMULATED_ANNEALING, PBWelfare.UTILITARIAN)
-    print(f'Simulated Annealing: {simulated_annealing}')
-    print()
-
-    genetic_algorithm = solver.solve(PBAlgorithm.GENETIC_ALGORITHM, PBWelfare.UTILITARIAN)
-    print(f'Genetic Algorithm: {genetic_algorithm}')
-    print()
-
-    dyn_prog = solver.solve(PBAlgorithm.DYNAMIC_PROGRAMMING, PBWelfare.UTILITARIAN)
-    print(f'Dynamic Programming: {dyn_prog}')
-    print()
-
-    branch_bound = solver.solve(PBAlgorithm.BRANCH_AND_BOUND, PBWelfare.UTILITARIAN)
-    print(f'Branch & Bound: {branch_bound}')
-    print()
+    # Examples:
+    # - solver.solve(PBAlgorithm.GREEDY, PBWelfare.UTILITARIAN)
+    # - solver.solve(PBAlgorithm.SIMULATED_ANNEALING, PBWelfare.UTILITARIAN)
+    # - solver.solve(PBAlgorithm.GENETIC_ALGORITHM, PBWelfare.UTILITARIAN)
+    # - solver.solve(PBAlgorithm.DYNAMIC_PROGRAMMING, PBWelfare.UTILITARIAN)
+    # - solver.solve(PBAlgorithm.BRANCH_AND_BOUND, PBWelfare.UTILITARIAN)
 
 
 def main():
